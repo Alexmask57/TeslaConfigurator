@@ -28,17 +28,12 @@ export class Step3Component implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.teslaService.selectedModel.pipe(take(1)).subscribe(res => {
       this.selectedModel = res;
-      console.log(this.selectedModel);
       this.teslaService.getOptions(res.code).subscribe(options => {
         this.modelOptionsResponse = options;
-        console.log(this.modelOptionsResponse);
       });
       this.teslaService.getModels().subscribe(
         models => {
           this.modelResponse = models.findIndex(x => x.code == this.selectedModel.code) ? models[models.findIndex(x => x.code == this.selectedModel.code)] : new ModelResponse();
-          console.log(this.modelResponse);
-          console.log('Description');
-          console.log(this.selectedModel.color);
         }
       )
     });
