@@ -19,6 +19,6 @@ export class TeslaService {
   }
 
   getOptions(id: string){
-    return this.httpClient.get<ModelOptionsResponse[]>(`/options/${id}`);
+    return this.httpClient.get<ModelOptionsResponse>(`/options/${id}`);
   }
 }

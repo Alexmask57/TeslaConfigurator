@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {TeslaService} from "../services/tesla.service";
 import {ModelResponse} from "../models/modelResponse";
 import {NgForOf, NgIf} from "@angular/common";
@@ -17,12 +17,11 @@ import {take} from "rxjs";
   templateUrl: './step1.component.html',
   styleUrl: './step1.component.scss'
 })
-export class Step1Component implements OnInit {
+export class Step1Component implements OnInit, OnDestroy {
 
   step1Form!: FormGroup;
   models!: ModelResponse[];
-  displayColor: boolean = false;
-  displayImage: boolean = false;
+  selectedModel!: ModelSelected;
 
   constructor(private teslaService: TeslaService) {
   }
@@ -32,7 +31,7 @@ export class Step1Component implements OnInit {
     this.teslaService.getModels().subscribe(res => {
       this.models = res;
       this.teslaService.selectedModel.pipe(take(1)).subscribe(res => {
-        console.log(res);
+        this.selectedModel = res;
         this.step1Form.patchValue({
           modelSelect: res.code ? this.models.findIndex(x => x.code == res.code) : '',
           colorSelect: res.color
@@ -41,17 +40,21 @@ export class Step1Component implements OnInit {
     });
   }
 
+  ngOnDestroy(): void {
+
+  }
+
   onChange() {
-    // Set color when clicking on model
-    if (this.step1Form.get('modelSelect')?.valid && !this.step1Form.get('colorSelect')?.valid)
+    this.selectedModel.code = this.step1Form.get('modelSelect')?.valid ? this.models[this.step1Form.get('modelSelect')?.value].code : '';
+    this.selectedModel.color = this.step1Form.get('colorSelect')?.valid ? this.step1Form.get('colorSelect')?.value : '';
+    this.teslaService.selectedModel.next(this.selectedModel);
+  }
+
+  onSelectModel() {
+    if (this.step1Form.get('modelSelect')?.valid){
+      this.selectedModel = new ModelSelected();
       this.step1Form.get('colorSelect')?.setValue(this.models[this.step1Form.get('modelSelect')?.value].colors[0].code);
-
-    let selected = new ModelSelected();
-    selected.code = this.step1Form.get('modelSelect')?.valid ? this.models[this.step1Form.get('modelSelect')?.value].code : '';
-    selected.color = this.step1Form.get('colorSelect')?.valid ? this.step1Form.get('colorSelect')?.value : '';
-    this.teslaService.selectedModel.next(selected);
-
-
+    }
   }
 
   private buildForm() {
@@ -59,10 +62,6 @@ export class Step1Component implements OnInit {
       modelSelect: new FormControl('', [Validators.required]),
       colorSelect: new FormControl('', [Validators.required]),
     });
-  }
-
-  public noWhitespaceValidator(control: FormControl) {
-    return (control.value || '').trim().length? null : { 'whitespace': true };
   }
 
 }

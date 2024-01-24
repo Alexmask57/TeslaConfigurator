@@ -2,11 +2,8 @@ export class ModelSelected {
   code: string = '';
   color: string = '';
   config: string = '';
-
-
-  // constructor(code: string) {
-  //   this.code = code;
-  // }
+  tow: boolean = false;
+  yoke: boolean = false;
 
   step1IsValid() {
     return !this.areNullOrEmpty([this.code, this.color]);

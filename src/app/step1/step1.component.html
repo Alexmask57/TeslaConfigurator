@@ -3,7 +3,7 @@
   <div class="col-12">
     <form (change)="onChange()" [formGroup]="step1Form">
       <label class="form-label" for="modelSelect">Model</label>
-      <select id="modelSelect" name="modelSelect" formControlName="modelSelect" class="form-select">
+      <select (change)="onSelectModel()" id="modelSelect" name="modelSelect" formControlName="modelSelect" class="form-select">
         <option value="" selected>Choose</option>
         <option *ngFor="let model of models; index as i" value="{{i}}">{{ model?.code }}</option>
       </select>
@@ -13,10 +13,10 @@
           <option *ngFor="let color of models?.[this.step1Form.get('modelSelect')?.value]?.colors;" value="{{color.code}}">{{color.description}}</option>
         </select>
       </div>
-      <div *ngIf="this.step1Form.valid">
-        <img src="https://interstate21.com/tesla-app/images/{{models?.[this.step1Form.get('modelSelect')?.value]?.code}}/{{this.step1Form.get('colorSelect')?.value}}.jpg">
-      </div>
     </form>
+    <div *ngIf="this.step1Form.valid">
+      <img src="https://interstate21.com/tesla-app/images/{{models?.[this.step1Form.get('modelSelect')?.value]?.code}}/{{this.step1Form.get('colorSelect')?.value}}.jpg">
+    </div>
   </div>
 </div>
 
