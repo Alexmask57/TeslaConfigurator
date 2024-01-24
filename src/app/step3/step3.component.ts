@@ -33,7 +33,7 @@ export class Step3Component implements OnInit, OnDestroy {
       });
       this.teslaService.getModels().subscribe(
         models => {
-          this.modelResponse = models.findIndex(x => x.code == this.selectedModel.code) ? models[models.findIndex(x => x.code == this.selectedModel.code)] : new ModelResponse();
+          this.modelResponse = models.findIndex(x => x.code == this.selectedModel.code) >= 0 ? models[models.findIndex(x => x.code == this.selectedModel.code)] : new ModelResponse();
         }
       )
     });
@@ -42,11 +42,11 @@ export class Step3Component implements OnInit, OnDestroy {
   ngOnDestroy(): void {
   }
 
-  getColor(){
+  getColor() {
     return this.modelResponse.colors[this.modelResponse.colors.findIndex(x => x.code == this.selectedModel.color)]
   }
 
-  getTotal(){
+  getTotal() {
     let total = this.modelOptionsResponse.configs[+this.selectedModel.config].price +
       this.getColor().price;
     if (this.selectedModel.tow)

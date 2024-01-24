@@ -43,7 +43,7 @@ export class Step2Component implements OnInit {
     selected.color = this.selectedModel.color;
     selected.config = this.step2Form.get('configSelect')?.valid ? this.step2Form.get('configSelect')?.value : '';
     selected.tow = this.optionsModel.towHitch ? this.step2Form.get('includeTow')?.value : false;
-    selected.yoke = this.optionsModel.towHitch ? this.step2Form.get('includeYoke')?.value : false;
+    selected.yoke = this.optionsModel.yoke ? this.step2Form.get('includeYoke')?.value : false;
     this.teslaService.selectedModel.next(selected);
   }
 
