@@ -15,7 +15,7 @@
       </div>
     </form>
     <div *ngIf="this.step1Form.valid">
-      <img src="https://interstate21.com/tesla-app/images/{{models?.[this.step1Form.get('modelSelect')?.value]?.code}}/{{this.step1Form.get('colorSelect')?.value}}.jpg">
+      <img src="https://interstate21.com/tesla-app/images/{{selectedModel.code}}/{{selectedModel.color}}.jpg" alt="{{selectedModel.code}}/{{selectedModel.color}}">
     </div>
   </div>
 </div>

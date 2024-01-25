@@ -1,4 +1,4 @@
-import {Component, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {TeslaService} from "../services/tesla.service";
 import {ModelResponse} from "../models/modelResponse";
 import {NgForOf, NgIf} from "@angular/common";
