@@ -1,6 +1,6 @@
 # TeslaConfigurator
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.7.
+Application Angular pour le passage de la certification Angular niveau 2
 
 ## Development server
 
